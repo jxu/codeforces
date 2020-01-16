@@ -5,6 +5,7 @@
 using namespace std;
 
 int m[1001][1001];
+int row_map[1001], col_map[1001];
 
 int main() 
 {
@@ -13,12 +14,12 @@ int main()
 
     for (int i=1; i<=n; i++)
     {
+        row_map[i] = i;
         for (int j=1; j<=n; j++)
         {
+            col_map[j] = j;
             cin >> m[i][j];
-            //cout << m[i][j] << ' ';
         }
-        //cout << '\n';
     }
 
     for (int K=1; K<=k; K++)
@@ -29,28 +30,17 @@ int main()
 
         if (c == 'A') 
         {
-            cout << m[a][b] << '\n';
+            cout << m[row_map[a]][col_map[b]] << '\n';
         }
 
         else if (c == 'R') 
         {
-            for (int j=1; j<=n; j++)
-            {
-                swap(m[a][j], m[b][j]);
-
-            }
-
+            swap(row_map[a], row_map[b]);
         }
 
         else if (c == 'C')
         {
-            for (int i=1; i<=n; i++)
-            {
-                swap(m[i][a], m[i][b]);
-
-            }
+            swap(col_map[a], col_map[b]);
         }
-
     }
-
 }
