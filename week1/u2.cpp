@@ -8,17 +8,15 @@ using namespace std;
 
 int main() 
 {
+    ios_base::sync_with_stdio(false);
+    
     int n, L;
     long long B;
-    vector<int> a;
-
     cin >> n >> L >> B;
+    vector<int> a(n);
+    
     for (int i=0; i<n; i++)
-    {
-        int ai;
-        cin >> ai;
-        a.push_back(ai);
-    }
+        cin >> a[i];
 
     sort(a.begin(), a.end());
 
