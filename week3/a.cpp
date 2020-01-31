@@ -4,9 +4,6 @@
 
 using namespace std;
 
-typedef vector<int> vi;
-typedef vector<vi> vvi;
-
 typedef long long ll;
 
 ll f(ll n, ll k)
@@ -17,18 +14,14 @@ ll f(ll n, ll k)
         ll ve = min(k, n);
         n -= ve;
         v += ve;
-
-        n -= n/10ll;
-
+        n -= n/10;
     }
 
-    return v ;
-
+    return v;
 }
 
 int main() 
 {
-
     ll n;
     scanf("%lld", &n);
     ll lo = 0;
@@ -37,21 +30,12 @@ int main()
     while (hi - lo > 1)
     {
         ll mid = (lo + hi)/2;
-        //printf("%lld %lld %lld\n", lo, mid, hi);
 
         if (f(n, mid) >= (n+1)/2)
-        {
             hi = mid;
-        }
         else 
-        {
             lo = mid;
-
-        }
-
-
     }
 
     printf("%lld\n", hi);
-
 }
