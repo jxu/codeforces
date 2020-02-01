@@ -6,16 +6,28 @@
 using namespace std;
 
 
-double det(double a, double b, double c, double d, double x)
+bool overlap(double a, double b, double c, double d, double x)
 {
-    double d1 = (a+x)*(d+x) - (b+x)*(c+x);
-    double d2 = (a+x)*(d+x) - (b-x)*(c-x);
-    double d3 = (a-x)*(d-x) - (b+x)*(c+x);
-    double d4 = (a-x)*(d-x) - (b-x)*(c-x);
+    double ad0 = (a+x)*(d+x);
+    double ad1 = (a+x)*(d-x);
+    double ad2 = (a-x)*(d+x);
+    double ad3 = (a-x)*(d-x);
 
+    double max_ad = max({ad0, ad1, ad2, ad3});
+    double min_ad = min({ad0, ad1, ad2, ad3});
 
-    
-    return (a+x)*(d+x) - (b-x)*(c-x);
+    double bc0 = (b+x)*(c+x);
+    double bc1 = (b+x)*(c-x);
+    double bc2 = (b-x)*(c+x);
+    double bc3 = (b-x)*(c-x);
+
+    double max_bc = max({bc0, bc1, bc2, bc3});
+    double min_bc = min({bc0, bc1, bc2, bc3});
+
+    //printf("ad [%lf,%lf] bc [%lf,%lf]\n", min_ad, max_ad, min_bc, max_bc);
+
+    return (min_ad <= min_bc && max_ad >= min_bc) || 
+           (min_bc <= min_ad && max_bc >= min_ad);
 }
 
 int main() 
@@ -23,28 +35,19 @@ int main()
     double a, b, c, d;
     scanf("%lf %lf %lf %lf", &a, &b, &c, &d);
 
-    double hi = pow(10, 11);
-    double lo = -pow(10, 11);
-    double eps = pow(10, -9);
+    double hi = max({abs(a), abs(b), abs(c), abs(d)});
+    double lo = 0;
 
-    for (int k=0; k<1000; k++)
+    for (int k=0; k<100; k++)
     {
         double mid = (lo + hi)/2;
-        //printf("%lf %lf %lf %lf\n", lo, mid, hi, det(a, b, c, d, mid));
+        //printf("%lf %lf %lf\n", lo, mid, hi);
 
-        if (det(a, b, c, d, mid) >= 0)
-        {
+        if (overlap(a, b, c, d, mid))
             hi = mid;
-        }
         else 
-        {
             lo = mid;
-
-        }
-
-
     }
 
-    printf("%lf\n", fabs(lo));
-
+    printf("%.9f\n", lo);
 }
