@@ -5,7 +5,6 @@
 using namespace std;
 
 typedef vector<int> vi;
-typedef vector<vi> vvi;
 
 int main() 
 {
@@ -21,48 +20,23 @@ int main()
         vector<bool> lofit(n);
         vector<bool> hifit(n);
 
-        vi lofitsum(n);
-        vi hifitsum(n);
-
         for (int i=0; i<n; i++)
         {
             cin >> a[i];
-            lofit[i] = a[i] >= i;
-            hifit[i] = a[i] >= n-1-i;
-
-            lofitsum[i] = lofit[i];
-            if (i > 0) lofitsum[i] += lofitsum[i-1];
-
+            lofit[i] = (a[i] >= i);
+            if (i > 0) lofit[i] &= lofit[i-1];
         }
 
         for (int i=n-1; i>=0; i--)
         {
-            hifitsum[i] = hifit[i];
-            if (i < n-1) hifitsum[i] += hifitsum[i+1];
-
+            hifit[i] = (a[i] >= n-1-i);
+            if (i < n-1) hifit[i] &= hifit[i+1];
         }
-
-        /*
-        for (int i=0; i<n; i++)
-        {
-            cout << lofitsum[i] << " ";
-
-        }
-
-        cout << endl;
-
-        for (int i=0; i<n; i++)
-        {
-            cout << hifitsum[i] << " ";
-        }
-
-        cout << endl;
-        */
 
         bool success = false;
         for (int i=0; i<n; i++)
         {
-            if (lofitsum[i] >= i+1  && hifitsum[i] >= n-i) 
+            if (lofit[i] && hifit[i]) 
             {
                 success = true;
                 break;
@@ -75,5 +49,4 @@ int main()
             cout << "No\n";
 
     }
-
 }
