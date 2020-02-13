@@ -7,73 +7,41 @@ using namespace std;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 
-void dfs(int n, int m, vvi& a, vvi& visited, int i, int j,
-         int& t, int si, int sj)
+void dfs(vvi& a, vvi& visit, int i, int j, int& k)
 {
-
     //cout << "dfs " << i << j << endl;
+    int n = (int)(a.size());
+    int m = (int)(a[0].size());
+    
+    visit[i][j] = 1;
+    bool any_nb = false;
 
-    visited[i][j] = 1;
-    int nb = 0;
-
-    if (i-1 >= 0 && a[i-1][j] == 0 && visited[i-1][j] == 0)
+    // recurse on neighbors
+    for (int di : {-1, 0, 1}) // fancy loop 
     {
-        dfs(n, m, a, visited, i-1, j, t, si, sj);
-        if (a[i-1][j] == 0) nb++;
-    }
-    if (i+1 < n && a[i+1][j] == 0 && visited[i+1][j] == 0) 
-    {
-        dfs(n, m, a, visited, i+1, j, t, si, sj);
-        if (a[i+1][j] == 0) nb++;
-    }
-    if (j-1 >= 0 && a[i][j-1] == 0 && visited[i][j-1] == 0)
-    {
-        dfs(n, m, a, visited, i, j-1, t, si, sj );
-        if (a[i][j-1] == 0) nb++;
-    }
-    if (j+1 < m && a[i][j+1] == 0 && visited[i][j+1] == 0) 
-    {
-        dfs(n, m, a, visited, i, j+1,t, si, sj);
-        if (a[i][j+1] == 0) nb++;
-    }
-
-    // count nb
-    // 
-    /*
-    if (i-1 >= 0 && a[i-1][j] == 0)
-    {
-        ++nb;
-    }
-    if (i+1 < n && a[i+1][j] == 0) 
-    {
-        ++nb;
-    }
-    if (j-1 >= 0 && a[i][j-1] == 0)
-    {
-        ++nb;
-    }
-    if (j+1 < m && a[i][j+1] == 0) 
-    {
-        ++nb;
-    }
-
-    */
-
-    if (nb == 0)
-    {
-        visited[i][j] = 2;
-        //cout << "leaf " << i << j << endl;
-
-        if (t > 0 && !(i == si && j == sj))
+        int ni = i + di;
+        for (int dj : {-1, 0, 1})
         {
-            //cout << "kill " << i << j << endl;
-            --t;
-            a[i][j] = 2;
+            int nj = j + dj;
+            if ((di == 0) + (dj == 0) != 1) // only grid neighbors
+                continue;
 
+            if (ni < 0 || ni >= n || nj < 0 || nj >= m) 
+                continue;
+
+            if (a[ni][nj] == 0 && visit[ni][nj] == 0)
+            {
+                dfs(a, visit, ni, nj, k);
+                if (a[ni][nj] == 0) any_nb = true; // check if leaf pruned
+            }
         }
     }
-
-
+    if (!any_nb && k > 0)
+    {
+        //cout << "kill " << i << j << endl;
+        --k;
+        a[i][j] = 2; // set cell to pruned
+    }
 }
 
 int main() 
@@ -86,7 +54,7 @@ int main()
     cin >> n >> m >> k;
 
     vvi a(n, vi(m, 0));
-    vvi visited(n, vi(m, 0));
+    vvi visit(n, vi(m, 0));
 
     char c;
     for (int i=0; i<n; i++) 
@@ -95,36 +63,17 @@ int main()
         {
             cin >> c;
             if (c == '#') 
-            {
                 a[i][j] = 1;
-            } else
+            else
             {
                 start_i = i;
                 start_j = j;
             }
-
-            //cout << a[i][j];
-
         }
-        //cout << endl;
     }
 
-    while (k) 
-    {
-        //cout << "k " << k << endl;
-
-        dfs(n, m, a, visited, start_i, start_j, k, start_i, start_j);
-        
-        for (int i=0; i<n; i++)
-        {
-            for (int j=0; j<m; j++)
-            {
-                visited[i][j] = 0;
-            }
-        }
-        break;
-    }
-
+    dfs(a, visit, start_i, start_j, k);
+    
     for (int i=0; i<n; i++)
     {
         for (int j=0; j<m; j++)
@@ -135,5 +84,4 @@ int main()
         }
         cout << "\n";
     }
-
 }
