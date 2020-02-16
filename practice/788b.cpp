@@ -1,6 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <stack>
 #include <algorithm>
 #include <climits>
 
@@ -10,6 +9,18 @@ typedef vector<bool> vb;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef long long ll;
+
+void dfs(const vvi& edge_list, vb& visited, int i, int& edges)
+{
+    visited[i] = true;
+    for (int j : edge_list[i]) 
+    {
+        if (!visited[j]) 
+            dfs(edge_list, visited, j, edges);
+
+        if (j >= i) ++edges;
+    }
+}
 
 int main() 
 {
@@ -44,23 +55,7 @@ int main()
         }
     }
 
-    // dfs
-    stack<int> S; S.push(start);
-
-    while (!S.empty()) 
-    {
-        int i = S.top(); S.pop();
-        if (visited[i]) continue; 
-        visited[i] = true;
-        for (int j : edge_list[i]) 
-        {
-            if (!visited[j])
-                S.push(j); // may have multiple copies of neighbor
-
-            if (j >= i) ++edges;
-        }
-    }
-
+    dfs(edge_list, visited, start, edges);
 
     for (int i=0; i<n; i++)
     {
@@ -75,3 +70,4 @@ int main()
     
     cout << good_paths << "\n"; 
 }
+
