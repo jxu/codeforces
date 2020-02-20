@@ -11,24 +11,31 @@ typedef long long ll;
 
 typedef pair<int, ll> pil;
 typedef vector<int> vi;
-typedef vector<ll> vl;
+typedef vector<ll> vll;
 typedef vector<vi> vvi;
+
+typedef struct 
+{
+    int key;
+    ll priority;
+} kp;
 
 typedef vector<vector<pil>> Edges;
 
-struct greater_pil
+struct greater_kp
 {
-    bool operator()(const pil& a, const pil& b) 
+    bool operator()(const kp& a, const kp& b) 
     {
-        return a.second > b.second;
+        return a.priority > b.priority;
     }
 };
 
 
-void dijkstra(const Edges& edge, vl& dist, int n, int source) 
+void dijkstra(const Edges& edge, vll& dist, int n, int source) 
 {
-    priority_queue<pil, vector<pil>, greater_pil> pq;
-    dist = vl(n);
+    // min priority queue
+    priority_queue<kp, vector<kp>, greater_kp> pq;
+    dist = vll(n);
 
     for (int i=0; i<n; i++)
     {
@@ -40,8 +47,8 @@ void dijkstra(const Edges& edge, vl& dist, int n, int source)
 
     while (!pq.empty()) 
     {
-        int u; 
-        u = pq.top().first; pq.pop();
+        int u = pq.top().key; pq.pop();
+        
         for (pil p : edge[u]) 
         {
             int v = p.first;
@@ -50,13 +57,9 @@ void dijkstra(const Edges& edge, vl& dist, int n, int source)
             {
                 dist[v] = dist[u] + weight;
                 pq.push({v, dist[v]});
-
             }
         }
-
-
     }
-
 }
 
 int main() 
@@ -81,7 +84,7 @@ int main()
         
     }
 
-    vl dist1, dist2;
+    vll dist1, dist2;
     dijkstra(edge, dist1, n, 0);
     dijkstra(edge, dist2, n, n-1);
 
