@@ -3,56 +3,46 @@
 #include <algorithm>
 #include <climits>
 #include <queue>
-#include <tuple>
 
 using namespace std;
 
 typedef long long ll;
 
-typedef pair<int, ll> pil;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vi> vvi;
 
-typedef struct 
-{
-    int key;
-    ll priority;
-} kp;
+typedef struct { ll element; ll priority; } ep;
+typedef struct { int vertex; ll weight; } vw;
+typedef vector<vector<vw>> Adj;
 
-typedef vector<vector<pil>> Edges;
-
-struct greater_kp
-{
-    bool operator()(const kp& a, const kp& b) 
-    {
-        return a.priority > b.priority;
-    }
-};
+struct greater_ep { 
+    bool operator()(const ep& a, const ep& b) { 
+        return a.priority > b.priority; } };
 
 
-void dijkstra(const Edges& edge, vll& dist, int n, int source) 
+// assume graphs have integer vertices [1,n]
+void dijkstra(int n, const Adj& adj, vll& dist, int source) 
 {
     // min priority queue
-    priority_queue<kp, vector<kp>, greater_kp> pq;
-    dist = vll(n);
+    priority_queue<ep, vector<ep>, greater_ep> pq;
+    dist = vll(n+1);
 
-    for (int i=0; i<n; i++)
+    for (int i=1; i<=n; i++)
     {
-        if (i == source) dist[i] = 0;
-        else dist[i] = 1e18;
+        dist[i] = (i == source) ? 0 : LLONG_MAX;
     }
 
     pq.push({source, dist[source]});
 
     while (!pq.empty()) 
     {
-        int u = pq.top().key; pq.pop();
+        int u = (int)pq.top().element; pq.pop();
         
-        for (pil p : edge[u]) 
+        for (vw vwp : adj[u]) 
         {
-            int v = p.first;
-            ll weight = p.second;
+            int v = vwp.vertex;
+            ll weight = vwp.weight;
             if (dist[v] > dist[u] + weight)
             {
                 dist[v] = dist[u] + weight;
@@ -70,37 +60,27 @@ int main()
     int n, m; 
     cin >> n >> m;
 
-    vector<vector<pil>> edge(n);
+    Adj adj(n+1);
 
-
-    for (int T=0; T<m; T++)
+    for (int M=0; M<m; M++)
     {
         int u, v; ll w;
         cin >> u >> v >> w;
-        --u, --v;
 
-        edge[u].push_back({v, w});
-        edge[v].push_back({u, w});
-        
+        adj[u].push_back({v, w});
+        adj[v].push_back({u, w});
     }
 
     vll dist1, dist2;
-    dijkstra(edge, dist1, n, 0);
-    dijkstra(edge, dist2, n, n-1);
+    dijkstra(n, adj, dist1, 1);
+    dijkstra(n, adj, dist2, n);
 
-    ll best_dist = 1e18;
+    ll best_dist = LLONG_MAX;
 
-    for (int i=0; i<n; i++) 
+    for (int i=1; i<=n; i++) 
     {
-        //cout << i << " " << dist1[i] << " " << dist2[i] << endl;
-        ll x = abs(dist1[i] - dist2[i]);
-        if (x < best_dist) 
-        {
-            best_dist = x;
-        }
+        best_dist = min(best_dist, abs(dist1[i] - dist2[i]));
     }
 
     cout << best_dist << endl;
-
-
 }
