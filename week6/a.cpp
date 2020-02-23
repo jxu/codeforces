@@ -12,12 +12,12 @@ typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<vi> vvi;
 
-typedef struct { ll element; ll priority; } ep;
 typedef struct { int vertex; ll weight; } vw;
 typedef vector<vector<vw>> Adj;
 
-struct greater_ep { 
-    bool operator()(const ep& a, const ep& b) { 
+// Dijkstra specific 
+typedef struct { ll element; ll priority; } ep;
+struct greater_ep { bool operator()(const ep& a, const ep& b) { 
         return a.priority > b.priority; } };
 
 
@@ -29,16 +29,16 @@ void dijkstra(int n, const Adj& adj, vll& dist, int source)
     dist = vll(n+1);
 
     for (int i=1; i<=n; i++)
-    {
         dist[i] = (i == source) ? 0 : LLONG_MAX;
-    }
 
     pq.push({source, dist[source]});
 
     while (!pq.empty()) 
     {
-        int u = (int)pq.top().element; pq.pop();
-        
+        ep x = pq.top(); pq.pop();
+        int u = (int)x.element;
+        if (dist[u] < x.priority) continue;
+
         for (vw vwp : adj[u]) 
         {
             int v = vwp.vertex;
