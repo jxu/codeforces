@@ -21,57 +21,30 @@ int main()
         int n, m;
         cin >> n >> m;
         vector<char> s(n);
-        vi p(m+1);
-        vi countp(n,0), countpp(n,0);
+        vi endc(n,0), countc(n,0);
         vi letter(26, 0);
 
         for (int i=0; i<n; i++)
-        {
             cin >> s[i];
-        }
+        
         for (int i=0; i<m; i++)
         {
-            cin >> p[i];
-            p[i]--;
-            countp[p[i]]++;
+            int pi;
+            cin >> pi;
+            endc[pi-1]++;
         }
-        p[m] = n-1;
-        countp[n-1]++;
-        //sort(p.begin(), p.end());
-       
-        //for (int x : countp) cout << x;
-        //cout << endl;
+        endc[n-1]++; // full combo!
 
         int r = 0;
         for (int i=n-1; i>=0; i--)
         {
-            r += countp[i];
-            countpp[i] = r;
-            /*
-            int lo = 0; int hi = m+1;
-            while (hi - lo > 1) 
-            {
-                int mid = (lo + hi)/2;
-                if (i < p[mid])
-                    hi = mid;
-                else
-                    lo = mid;
-            }
-
-            cout << i << " " << lo << endl;
-            */
+            r += endc[i];
+            countc[i] = r;
         }
-
-        //for (int x : countpp) cout << x;
-        //cout << endl;
-
-        //for (char c : s) cout << c;
-        //cout << endl;
 
         for (int i=0; i<n; i++)
         {
-            char c = s[i];
-            letter[(int)(c - 'a')] += countpp[i];
+            letter[s[i] - 'a'] += countc[i];
         }
 
         for (int x : letter)
