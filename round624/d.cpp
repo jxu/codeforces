@@ -24,38 +24,23 @@ int main()
         int bestA, bestB, bestC;
         int best_res = INT_MAX;
 
-        for (int A=1; A <= 20000; A++)
+        for (int A=1; A <= 10000; A++)
         {
-            for (int B=A; B <= 20000; B += A)
+            for (int B=A; B <= 15000; B += A)
             {
-                int C1 = (c / B) * B;
-                int C2 = C1 + B;
-                
-                int C = C2;
-                if (c - C1 < C2 - c) 
-                {
-                    C = C1;
-                }
-
-                //if (c < B) C = B;
-
+                int C = (c / B) * B;
+                if ((c - C) > B/2) C += B; 
                 int res = abs(a - A) + abs(b - B) + abs(c - C);
+                
                 if (res < best_res)
                 {
                     best_res = res;
-                    bestA = A;
-                    bestB = B;
-                    bestC = C;
-    
+                    bestA = A; bestB = B; bestC = C;
                 }
-
-
             }
         }
 
-            cout << best_res << endl ;
-            cout << bestA << " " << bestB << " " << bestC << endl;
-
-
+        cout << best_res << endl ;
+        cout << bestA << " " << bestB << " " << bestC << endl;
     }
 }
