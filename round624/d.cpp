@@ -24,9 +24,9 @@ int main()
         int bestA, bestB, bestC;
         int best_res = INT_MAX;
 
-        for (int A=1; A <= 2000; A++)
+        for (int A=1; A <= 20000; A++)
         {
-            for (int B=A; B <= 2000; B += A)
+            for (int B=A; B <= 20000; B += A)
             {
                 int C1 = (c / B) * B;
                 int C2 = C1 + B;
@@ -37,7 +37,7 @@ int main()
                     C = C1;
                 }
 
-                if (c < B) C = B;
+                //if (c < B) C = B;
 
                 int res = abs(a - A) + abs(b - B) + abs(c - C);
                 if (res < best_res)
