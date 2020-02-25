@@ -18,24 +18,12 @@ int main()
     int t; cin >> t;
     for (int T=0; T<t; T++)
     {
-        int a, b; cin >> a >> b;
+        int a, b; 
+        cin >> a >> b;
 
         if (a == b)
-        {
-            cout << "0\n";
-            continue;
-        }
-
-        if (a < b) 
-        {
-            cout << (((b - a) % 2) ? 1 : 2) << endl;
-            
-
-        } 
+            cout << "0" << endl;
         else
-        {
-            cout << (((a - b) % 2) ? 2 : 1) << endl;
-        }
-
+            cout << 1 + ((a < b) != (abs(a - b) % 2)) << endl;  
     }
 }
