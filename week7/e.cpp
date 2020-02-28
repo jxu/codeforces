@@ -20,22 +20,22 @@ int main()
     {
         int n; cin >> n;
         vi s(n), e(n), d(n);
+        
+
         for (int i=0; i<n; i++)
         {
             cin >> s[i] >> e[i] >> d[i];
         }
 
-        ll lo=0, hi=LLONG_MAX;
+        ll lo=0, hi=INT_MAX;
         while (hi - lo > 1) 
         {
             ll mid = lo + (hi-lo) / 2;
             ll x = 0;
             for (int i=0; i<n; i++) 
             {
-                if (e[i] <= mid) 
-                    x += (e[i] - s[i]) / d[i] + 1;
-                else
-                    x += (mid - s[i]) / d[i] + 1;
+                if (mid >= s[i])
+                    x += (min((ll)e[i], mid) - s[i]) / d[i] + 1;
             }
 
             if (x % 2 == 0) 
@@ -45,7 +45,7 @@ int main()
 
         }
 
-        if (hi == LLONG_MAX) 
+        if (hi == INT_MAX) 
             cout << -1 << endl;
         else 
             cout << hi << endl;
