@@ -25,48 +25,33 @@ int main()
         if (a) { ++s; --a;}
         if (b) { ++s; --b;}
         if (c) { ++s; --c;}
-        
-        //bool ab, bc, ac = true;
-        bool done = false;
 
         if (a >= 2 && b >= 2 && c >= 2) 
         {
-            a -= 2; b -= 2; c -= 2;
-            //ab = false; bc = false; ac = false;
-            done = true;
+            a -= 2; b -= 2; c -=2;
             s += 3;
         }
-
-        if (!done && a && b >= 2 && c)
+        else if (a && b >= 2 && c)
         {
-            a -= 1; b -= 2; c -= 1;
-            done = true;
+            a--; b -= 2; c--;
             s += 2;
         }
-
-        if (!done && a >= 2 && b && c)
+        else if (a >= 2 && b && c)
         {
-            a -= 2; b -= 1; --c;
-            done = true;
+            a -= 2; b--; c--;
             s += 2;
         }
-
-        if (!done && a && b && c >= 2)
+        else if (a && b && c >= 2)
         {
-            --a; --b; c -= 2;
-            done = true;
+            a--; b--; c -= 2;
             s += 2;
         }
-
-        if (!done && a && b) {++s; --a; --b;};
-        if (!done && b && c) {++s; --b; --c;};
-        if (!done && a && c) {++s; --a; --c;};
+        else if (a && b) {++s; --a; --b;}
+        else if (b && c) {++s; --b; --c;}
+        else if (a && c) {++s; --a; --c;}
 
         if (a && b && c) ++s;
 
         cout << s << endl;
-
-        
-
     }
 }
