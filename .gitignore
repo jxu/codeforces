@@ -1,7 +1,8 @@
 # ignore binaries and Makefiles 
 *
 
-# unignore source code and test inputs
+# unignore source code, test inputs, plaintext files
 !*.c
 !*.cpp
 !*.in
+!*.txt
