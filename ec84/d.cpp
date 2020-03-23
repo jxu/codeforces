@@ -10,31 +10,6 @@ typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef long long ll;
 
-bool cycle_k(vi& cycle, int k)
-{
-    //cout << "k " << k << endl;
-    int l = (int)cycle.size();
-    if (k == 0 || l % k) return false;
-
-    for (int i=0; i<k; i++)
-    {
-        
-
-        bool ok_k = true;
-        //cout << "i " << i << " ";
-        for (int j=i; j < l; j+=k)
-        {
-            //cout << "j" << j << " ";
-            if (cycle[j] != cycle[i]) ok_k = false;
-        }
-        //cout << endl;
-
-        if (ok_k) return true;
-    }
-
-    return false;
-}
-
 int main() 
 {
     ios_base::sync_with_stdio(false);
@@ -61,31 +36,39 @@ int main()
             if (seen[s]) continue;
             int y = s;
             vi cycle;
-            //cout << "cycle ";
-            do 
+            
+            do // build cycle 
             {
-                //cout << c[y] << " ";
                 seen[y] = true;
-                cycle.push_back(c[y]);
+                cycle.push_back(c[y]); // cycle colors
                 y = p[y];
             } while (y != s);
 
-            //cout << endl;
 
-            int l=(int)cycle.size();
+            int k, l = (int)cycle.size();
 
-            int k;
             for (k = 1; k <= l; k++)
             {
                 if (l % k) continue;
-                if (cycle_k(cycle, k)) break;
+                bool ok_k = false;
+
+                // try to find seq with step k
+                for (int i=0; i<k; i++)
+                {
+                    bool ok_seq = true;
+                    for (int j=i; j < l; j+=k)
+                    {
+                        if (cycle[j] != cycle[i]) ok_seq = false;
+                    }
+
+                    if (ok_seq) ok_k = true;
+                }
+                
+                if (ok_k) 
+                    best_k = min(best_k, k);
             }
-
-
-            best_k = min(best_k, k);
         }
 
-        //cout << "best k " << best_k << endl;
         cout << best_k << endl;
     }
 }
