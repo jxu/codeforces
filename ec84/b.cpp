@@ -5,6 +5,7 @@
 
 using namespace std;
 
+typedef vector<bool> vb;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef long long ll;
@@ -18,11 +19,8 @@ int main()
     int t; cin >> t;
     for (int T=0; T<t; T++)
     {
-        int n, k;
-        cin >> n;
-
-        vi found(n+1, 0), mar(n+1, 0);
-        int lo = 1;
+        int n, k; cin >> n;
+        vb p(n+1, 0), q(n+1, 0); // princess and prince
 
         for (int i = 1; i <= n; i++) 
         {
@@ -30,51 +28,27 @@ int main()
             
             for (int j = 1; j <= k; j++) 
             {
-                int g;
-                cin >> g;
-
-                if (!mar[g] && !found[i])
+                int g; cin >> g;
+                if (!q[g] && !p[i])
                 {
-                    mar[g] = 1;
-                    found[i] = 1;
-                    //cout << g << " " << i << endl;
+                    q[g] = true; p[i] = true;
                 }
-
-                //cout << g << " ";
-
             }
-            //cout << endl;
-            /*
-            for (int j = 1; j <= n; j++)
-                cout << mar[j];
-            cout << " ";
-            
-            for (int j = 1; j <= n; j++)
-                cout << found[j];
-            cout << endl;
-            */
-
         }
 
         bool f = false;
         for (int i = 1; i <= n; i++)
         {
-            if (!found[i])
+            if (!p[i])
             {
-                cout << "IMPROVE" << endl;
-                int j;
-                for (j = 1; mar[j]; j++)
-                    ;
-
-                cout << i << " " << j << endl;
+                int j = 1;
+                while (q[j]) ++j; 
+                cout << "IMPROVE\n" << i << " " << j << "\n";
                 f = true;
                 break;
-
             }
         }
 
-        if (!f) cout << "OPTIMAL" << endl;
-
-        //break;
+        if (!f) cout << "OPTIMAL\n";
     }
 }

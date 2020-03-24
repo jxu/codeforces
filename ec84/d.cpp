@@ -1,3 +1,4 @@
+// https://codeforces.com/blog/entry/75082#comment-592145
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -43,7 +44,6 @@ int main()
                 cycle.push_back(c[y]); // cycle colors
                 y = p[y];
             } while (y != s);
-
 
             int k, l = (int)cycle.size();
 
