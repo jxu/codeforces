@@ -5,6 +5,7 @@
 
 using namespace std;
 
+typedef vector<bool> vb;
 typedef vector<int> vi;
 typedef vector<vi> vvi;
 typedef long long ll;
