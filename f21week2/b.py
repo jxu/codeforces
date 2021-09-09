@@ -1,9 +1,8 @@
-from sys import stdin
 s = [0] * 2**18 
 
-lines = stdin.readlines()[1:]
-for line in lines:
-    op, val = line.strip().split()
+l = int(input())
+for _ in range(l):
+    op, val = input().split()
     val2 = ''.join(str(int(d)%2) for d in val)
 
     if op in "+-":
