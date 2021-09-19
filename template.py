@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 from sys import stdin
 
-#lines = [line.strip() for line in stdin] # one string per line
-#t = int(lines[0])
+#lines = [line.strip() for line in stdin]; t = int(lines[0])  # one string per line
 lines = [list(map(int, line.strip().split())) for line in stdin]
 t = lines[0][0]
 ln = 1
