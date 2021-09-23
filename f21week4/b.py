@@ -16,8 +16,9 @@ for k in range(K):
     new_dp = [0] * (N-M+1)
 
     for n in range(N-M+1):
-        new_dp[n] = max(s[n] + (0 if (n-M < 0 or k-1 < 0) else dp[n-M]), 
-                0 if n-1 < 0 else new_dp[n-1])
+        new_dp[n] = max(s[n] + (dp[n-M] if n-M >= 0 else 0),
+                        new_dp[n-1] if n-1 >= 0 else 0)
+    
     dp = new_dp
 
 print(max(dp))
