@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env pypy3
 from sys import stdin
 
 #lines = [line.strip() for line in stdin]; t = int(lines[0])  # one string per line
