@@ -2,7 +2,7 @@
 from sys import stdin
 
 lines = [line.strip() for line in stdin]
-t = int(lines[0][0])
+t = int(lines[0])
 ln = 1
 for _ in range(t):
     n, m, k = map(int, lines[ln].split())
