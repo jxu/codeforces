@@ -2,7 +2,6 @@
 from sys import stdin
 import heapq
 
-
 lines = [list(map(int, line.strip().split())) for line in stdin]
 t = lines[0][0]
 ln = 1
@@ -13,15 +12,10 @@ for _ in range(t):
     m = [[-a[i], i+1] for i in range(n)]
     heapq.heapify(m)
 
-    #print(m)
     while True:
-        #print(m)
         a = heapq.heappop(m)
         b = heapq.heappop(m)
-        
-        c = -b[0]
-
-        if c == 0: break
+        if b[0] == 0: break
 
         s.append((a[1], b[1]))       
 
