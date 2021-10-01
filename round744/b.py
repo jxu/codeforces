@@ -16,10 +16,6 @@ for _ in range(t):
             sol.append(f"{l+1} {n} {d}")
             a = a[:l] + na[d:] + na[:d]
 
-            #print(a)
-
     print(len(sol))
     print("\n".join(sol))
-
-
 
