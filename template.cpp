@@ -2,24 +2,28 @@
 #include <vector>
 #include <algorithm>
 #include <climits>
+#include <cstdint>
 
 using namespace std;
 
-typedef vector<bool> vb;
+#define int long long
+
 typedef vector<int> vi;
 typedef vector<vi> vvi;
-typedef long long ll;
 
+void solve();
 
-int main() 
-{
+int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
     int t; cin >> t;
-    for (int T=0; T<t; T++)
-    {
-
-
+    while (t--) {
+        solve();
     }
+}
+
+void solve() {
+
+
 }
