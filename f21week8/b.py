@@ -1,10 +1,3 @@
 n = int(input())
-
-s = 1
-for k in range(n, 5+n):
-    s *= k
-s //= 120
-for k in range(n, 3+n):
-    s *= k
-s//=6
-print(s)
+# math.comb in python 3.8+
+print(n*(n+1)*(n+2)*(n+3)*(n+4)//120 * n*(n+1)*(n+2)//6)
